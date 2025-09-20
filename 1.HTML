@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản Lý Vé</title>
+<style>
+  body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url("img/nen.jpg") no-repeat center center/cover; 
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.7);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  gap: 40px;
+  width: 90%;
+  max-width: 1200px;
+}
+
+h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 40px;
+  color: #ff69b4;
+  margin: 0;
+}
+
+.form-section {
+  flex: 1;
+  color: #ffb6c1;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.buttons button {
+  background: #00bfff;
+  border: none;
+  padding: 12px 25px;
+  margin-left: 55px;
+  margin-right: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buttons button:hover {
+  background: #009acd;
+}
+
+.table-section {
+  flex: 1.5;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+thead {
+  background: #4b2e2e;
+  color: #fff;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 20px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+</style>
+  <!-- <link rel="stylesheet" href="1.CSS"> -->
+</head>
+<body>
+  <div class="overlay">
+    <h1>Quản Lý Vé</h1>
+    <div class="close-btn">X</div>
+
+    <div class="container">
+      <div class="form-section">
+        <div class="form-group">
+          <label>Mã vé</label>
+          <input type="text" id="maVe">
+        </div>
+        <div class="form-group">
+          <label>Giá vé</label>
+          <input type="text" id="giaVe">
+        </div>
+        <div class="form-group">
+          <label>Tên phim</label>
+          <input type="text" id="tenPhim">
+        </div>
+        <div class="form-group">
+          <label>Thể loại</label>
+          <input type="text" id="theLoai">
+        </div>
+        <div class="form-group">
+          <label>Ngày</label>
+          <input type="date" id="ngay">
+        </div>
+
+        <div class="buttons">
+          <button>Thêm</button>
+          <button>Sửa</button>
+          <button>Xóa</button>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <table>
+          <thead>
+            <tr>
+              <th>Mã vé</th>
+              <th>Giá vé</th>
+              <th>Tên phim</th>
+              <th>Thể loại</th>
+              <th>Ngày</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
