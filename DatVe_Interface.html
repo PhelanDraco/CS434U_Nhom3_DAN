@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé xem phim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            z-index: 100;
+            padding: 15px 30px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #7cb342;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+        }
+
+        .cinema-section {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .screen-area {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .screen-label {
+            color: #999;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .screen {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, transparent 0%, #7cb342 20%, #7cb342 80%, transparent 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-seat {
+            width: 20px;
+            height: 18px;
+            border-radius: 6px 6px 2px 2px;
+            position: relative;
+        }
+
+        .legend-seat::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 2px;
+            right: 2px;
+            height: 4px;
+            background: inherit;
+            border-radius: 0 0 2px 2px;
+        }
+
+        .legend-seat.standard {
+            background: #ffd700;
+        }
+
+        .legend-seat.vip {
+            background: #ff6b6b;
+        }
+
+        .legend-seat.couple {
+            background: #ff9800;
+        }
+
+        .legend-seat.available {
+            background: #7cb342;
+        }
+
+        .legend-seat.sold {
+            background: #ccc;
+        }
+
+        .seating-grid {
+            display: grid;
+            grid-template-columns: 30px repeat(15, 1fr) 30px;
+            gap: 8px;
+            justify-items: center;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .row-label {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .seat {
+            width: 32px;
+            height: 28px;
+            border-radius: 6px 6px 2px 2px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .seat::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 2px;
+            right: 2px;
+            height: 4px;
+            background: inherit;
+            border-radius: 0 0 2px 2px;
+        }
+
+        .seat:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .seat.standard {
+            background: #ffd700;
+        }
+
+        .seat.vip {
+            background: #ff6b6b;
+        }
+
+        .seat.couple {
+            background: #ff9800;
+        }
+
+        .seat.available {
+            background: #7cb342;
+        }
+
+        .seat.sold {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .seat.sold:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .seat.selected {
+            background: #7cb342 !important;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .couple-seat {
+            width: 68px;
+            background: #ff9800;
+        }
+
+        /* Sidebar */
+        .booking-sidebar {
+            width: 350px;
+            background: #f8f9fa;
+            padding: 30px;
+            border-left: 1px solid #e9ecef;
+        }
+
+        .movie-info h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .movie-details {
+            color: #7cb342;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .showtime {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .season-label {
+            background: #7cb342;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .ticket-info {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ticket-type {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .total-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .total-price {
+            color: #e53935;
+            font-size: 16pxpx;
+        }
+
+        .book-button {
+            width: 100%;
+            background: #7cb342;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-button:hover {
+            background: #689f33;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
+        }
+
+        .book-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .return-info {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .return-info .return-link {
+            color: #4caf50;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+
+        .time-remaining {
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .booking-sidebar {
+                width: 100%;
+            }
+
+            .seating-grid {
+                grid-template-columns: 20px repeat(15, 1fr) 20px;
+            }
+
+            .seat {
+                width: 24px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">XYZ Cinema</div>
+            <div class="user-info">
+                <span>Gửi định FAQ</span>
+                <span>TP. HUẾ ▼</span>
+                <span>Hải Le / Thoát</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="cinema-section">
+                <div class="screen-area">
+                    <div class="screen-label">Màn hình</div>
+                    <div class="screen"></div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-seat standard"></div>
+                        <span>Standard</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat vip"></div>
+                        <span>VIP</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat couple"></div>
+                        <span>Couple</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat available"></div>
+                        <span>Ghế đã chọn</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat sold"></div>
+                        <span>Ghế đã bán</span>
+                    </div>
+                </div>
+
+                <div class="seating-grid" id="seatingGrid">
+                </div>
+            </div>
+
+            <div class="booking-sidebar">
+                <div class="movie-info">
+                    <h2>XYZ Cinema Đà Nẵng</h2>
+                    <div class="movie-details">Screen 4 - 10/9/2025 - Suất chiếu: 9h30</div>
+                    <div class="showtime"></div>
+                </div>
+
+                <div class="season-label">MƯA ĐỎ</div>
+
+                <div class="ticket-info" id="ticketInfo">
+                </div>
+
+                <div class="total-section">
+                    <div class="total">
+                        <span>Tổng tiền</span>
+                        <span class="total-price" id="totalPrice">0 VNĐ</span>
+                    </div>
+
+                    <button class="book-button" id="bookButton" disabled>
+                        Thanh toán
+                    </button>
+
+                    <div class="return-info">
+                        <a href="" class="return-link">Return</a><br>
+                        <li>Còn lại <span class="time-remaining">6 phút, 26 giây</span></li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const seatPrices = {
+            'standard': 45000,
+            'vip': 65000,
+            'couple': 120000
+        };
+
+        const seatLayout = {
+            'A': { count: 10, type: 'standard' },
+            'B': { count: 10, type: 'standard', special: [11] },
+            'C': { count: 10, type: 'vip' },
+            'D': { count: 10, type: 'vip' },
+            'E': { count: 10, type: 'sold', available: [1, 2, 3, 14, 15] },
+            'F': { count: 10, type: 'sold', available: [1, 2, 3, 14, 15] },
+            'G': { count: 10, type: 'sold', available: [14, 15] },
+            'H': { count: 10, type: 'sold', available: [14, 15] },
+            'I': { count: 10, type: 'sold', available: [14, 15] },
+            'J': { count: 10, type: 'standard' },
+            'K': { count: 10, type: 'standard' },
+            'L': { count: 10, type: 'couple' }
+        };
+
+        function generateSeats() {
+            const grid = document.getElementById('seatingGrid');
+
+            Object.keys(seatLayout).forEach(row => {
+                const config = seatLayout[row];
+
+                const leftLabel = document.createElement('div');
+                leftLabel.className = 'row-label';
+                leftLabel.textContent = row;
+                grid.appendChild(leftLabel);
+
+                if (row === 'L') {
+                    for (let i = 1; i <= config.count; i++) {
+                        const seat = document.createElement('div');
+                        seat.className = 'seat couple-seat';
+                        seat.dataset.row = row;
+                        seat.dataset.number = i;
+                        seat.dataset.type = 'couple';
+                        seat.addEventListener('click', () => selectSeat(seat));
+                        grid.appendChild(seat);
+                    }
+                    for (let i = config.count + 1; i <= 15; i++) {
+                        const empty = document.createElement('div');
+                        grid.appendChild(empty);
+                    }
+                } else {
+                    for (let i = 1; i <= 15; i++) {
+                        if (config.gaps && config.gaps.includes(i)) {
+                            const empty = document.createElement('div');
+                            grid.appendChild(empty);
+                        } else if (i <= config.count) {
+                            const seat = document.createElement('div');
+                            let seatType = config.type;
+
+                            if (config.available && !config.available.includes(i)) {
+                                seatType = config.type;
+                            } else if (config.available && config.available.includes(i)) {
+                                seatType = 'standard';
+                            }
+
+                            if (row === 'B' && i === 11) {
+                                seatType = 'selected';
+                            }
+
+                            seat.className = `seat ${seatType}`;
+                            seat.dataset.row = row;
+                            seat.dataset.number = i;
+                            seat.dataset.type = seatType === 'selected' ? 'standard' : seatType;
+
+                            if (seatType !== 'sold') {
+                                seat.addEventListener('click', () => selectSeat(seat));
+                            }
+
+                            grid.appendChild(seat);
+                        } else {
+                            const empty = document.createElement('div');
+                            grid.appendChild(empty);
+                        }
+                    }
+                }
+
+                const rightLabel = document.createElement('div');
+                rightLabel.className = 'row-label';
+                rightLabel.textContent = row;
+                grid.appendChild(rightLabel);
+            });
+        }
+
+        function selectSeat(seat) {
+            if (seat.classList.contains('sold')) return;
+
+            if (seat.classList.contains('selected')) {
+                seat.classList.remove('selected');
+                const originalType = seat.dataset.type;
+                seat.classList.add(originalType);
+            } else {
+                seat.classList.remove('standard', 'vip', 'couple');
+                seat.classList.add('selected');
+            }
+
+            updateBookingInfo();
+        }
+
+        function updateBookingInfo() {
+            const selectedSeats = document.querySelectorAll('.seat.selected');
+            const bookButton = document.getElementById('bookButton');
+            const ticketInfo = document.getElementById('ticketInfo');
+            const totalPrice = document.getElementById('totalPrice');
+
+            ticketInfo.innerHTML = '';
+
+            if (selectedSeats.length > 0) {
+                bookButton.disabled = false;
+                bookButton.style.background = '#7cb342';
+
+                const seatsByType = {};
+                let total = 0;
+
+                selectedSeats.forEach(seat => {
+                    const seatType = seat.dataset.type;
+                    const seatPosition = seat.dataset.row + seat.dataset.number;
+                    const price = seatPrices[seatType];
+
+                    if (!seatsByType[seatType]) {
+                        seatsByType[seatType] = {
+                            seats: [],
+                            count: 0,
+                            price: price
+                        };
+                    }
+
+                    seatsByType[seatType].seats.push(seatPosition);
+                    seatsByType[seatType].count++;
+                    total += price;
+                });
+
+                Object.keys(seatsByType).forEach(seatType => {
+                    const info = seatsByType[seatType];
+                    const ticketTypeDiv = document.createElement('div');
+                    ticketTypeDiv.className = 'ticket-type';
+
+                    const seatTypeName = seatType === 'standard' ? 'Standard-2D' :
+                        seatType === 'vip' ? 'VIP-2D' : 'Couple-2D';
+
+                    ticketTypeDiv.innerHTML = `
+                        <div>
+                            <div style="margin-bottom: 5px;">
+                                <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px; margin-right: 5px;">T13</span>
+                                <span style="background: #333; color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px; margin-right: 5px;">PHỤ ĐỀ</span>
+                                <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px;">2D</span>
+                            </div>
+                            <div>${info.count} x Adult-${seatTypeName}</div>
+                            <div>${info.seats.join(', ')}</div>
+                        </div>
+                        <div class="price">${(info.count * info.price).toLocaleString('vi-VN')} VNĐ</div>
+                    `;
+
+                    ticketInfo.appendChild(ticketTypeDiv);
+                });
+                totalPrice.textContent = `${total.toLocaleString('vi-VN')} VNĐ`;
+
+            } else {
+                bookButton.disabled = true;
+                bookButton.style.background = '#ccc';
+                totalPrice.textContent = '0 VNĐ';
+            }
+        }
+        function startCountdown() {
+            let timeLeft = 6 * 60 + 26;
+
+            const timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                document.querySelector('.time-remaining').textContent = `${minutes} phút, ${seconds} giây`;
+
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                    alert('Thời gian giữ ghế đã hết!');
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            generateSeats();
+            startCountdown();
+            updateBookingInfo();
+        });
+    </script>
+</body>
+
+</html>
