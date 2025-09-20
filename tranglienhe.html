@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ & FAQ - Cinema XYZ</title>
+    <link rel="stylesheet" href="tranglienhe.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">🎬 CINEMA XYZ</div>
+            <nav class="nav">
+                <a href="#">Trang chủ</a>
+                <a href="#">Phim</a>
+                <a href="#">Lịch chiếu</a>
+                <a href="#">Khuyến mãi</a>
+                <a href="#" class="active">Liên hệ</a>
+            </nav>
+            <div class="auth-section">
+                <div class="hotline">📞 1900-xxxx</div>
+                <button class="btn-login">Đăng nhập</button>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="hero">
+        <h1>Chúng tôi luôn sẵn sàng hỗ trợ bạn!</h1>
+        <p>Liên hệ với chúng tôi để được tư vấn và hỗ trợ nhanh chóng</p>
+    </section>
+
+
+    <section class="contact-info">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="icon">📞</div>
+                    <h3>HOTLINE</h3>
+                    <div class="main-text">1900-xxxx</div>
+                    <div class="sub-text">Hỗ trợ 24/7</div>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">📧</div>
+                    <h3>EMAIL</h3>
+                    <div class="main-text">support@cinema.vn</div>
+                    <div class="sub-text">Phản hồi trong 2h</div>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">📍</div>
+                    <h3>ĐỊA CHỈ</h3>
+                    <div class="main-text">123 Đường ABC</div>
+                    <div class="sub-text">Quận 1, TP.HCM</div>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">🕒</div>
+                    <h3>GIỜ HOẠT ĐỘNG</h3>
+                    <div class="main-text">8:00 - 23:00</div>
+                    <div class="sub-text">Hàng ngày</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-content">
+                    <h2>Gửi yêu cầu hỗ trợ</h2>
+                    <p>Điền thông tin bên dưới và chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Họ tên *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Loại yêu cầu</label>
+                        <select id="type" name="type">
+                            <option>Khiếu nại</option>
+                            <option>Đặt vé</option>
+                            <option>Thông tin phim</option>
+                            <option>Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nội dung *</label>
+                        <textarea id="message" name="message" required placeholder="Mô tả chi tiết yêu cầu của bạn..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Gửi yêu cầu</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Câu hỏi thường gặp</h2>
+            <p class="section-subtitle">Tìm câu trả lời nhanh chóng cho các thắc mắc phổ biến</p>
+            
+            <div class="search-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" class="search-input" placeholder="Tìm kiếm câu hỏi...">
+            </div>
+            
+            <div class="faq-tabs">
+                <button class="tab-btn active">🎬 Phim & Lịch chiếu</button>
+                <button class="tab-btn">🎫 Đặt vé</button>
+                <button class="tab-btn">🍿 Dịch vụ</button>
+                <button class="tab-btn">💳 Thẻ thành viên</button>
+                <button class="tab-btn">🎁 Khuyến mãi</button>
+                <button class="tab-btn">⚙️ Kỹ thuật</button>
+            </div>
+            
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Làm sao để xem lịch chiếu phim?</span>
+                        <span class="faq-icon">⌄</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bạn có thể xem lịch chiếu bằng cách truy cập trang "Lịch chiếu" trên website hoặc app mobile của chúng tôi. Lịch chiếu được cập nhật hàng ngày với đầy đủ thông tin về giờ chiếu, phòng chiếu và giá vé.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Phim có phụ đề tiếng Việt không?</span>
+                        <span class="faq-icon">⌄</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Có, hầu hết các phim ngoại đều có phụ đề tiếng Việt. Thông tin về phụ đề sẽ được hiển thị rõ ràng trong lịch chiếu và trang thông tin phim.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Các hình thức thanh toán nào được chấp nhận?</span>
+                        <span class="faq-icon">⌄</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Chúng tôi chấp nhận thanh toán bằng thẻ ATM/Debit, thẻ tín dụng (Visa, Mastercard), ví điện tử (MoMo, ZaloPay, VNPay) và thanh toán tại quầy bằng tiền mặt.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Có thể hủy vé đã đặt không?</span>
+                        <span class="faq-icon">⌄</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Có, bạn có thể hủy vé trước giờ chiếu ít nhất 2 tiếng. Phí hủy vé là 10% giá trị vé. Vé hủy sau thời gian quy định sẽ không được hoàn tiền.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Độ tuổi xem phim được quy định như thế nào?</span>
+                        <span class="faq-icon">⌄</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Chúng tôi tuân thủ nghiêm ngặt quy định của Bộ Văn hóa về phân loại phim theo độ tuổi: P (Phù hợp mọi lứa tuổi), K (Dưới 13 tuổi cần có người lớn đi cùng), T13, T16, T18, C (Cấm chiếu).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <div class="chat-widget">
+        <button class="chat-btn">
+            💬 Chat với chúng tôi
+        </button>
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về Cinema ABC</h3>
+                <p>Hệ thống rạp phim hiện đại hàng đầu Việt Nam với công nghệ chiếu phim tiên tiến nhất.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">📺</a>
+                    <a href="#" class="social-icon">📱</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Liên kết nhanh</h3>
+                <p><a href="#">Về chúng tôi</a></p>
+                <p><a href="#">Tin tức</a></p>
+                <p><a href="#">Tuyển dụng</a></p>
+                <p><a href="#">Đối tác</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Chính sách</h3>
+                <p><a href="#">Chính sách bảo mật</a></p>
+                <p><a href="#">Điều khoản sử dụng</a></p>
+                <p><a href="#">Chính sách đổi trả</a></p>
+                <p><a href="#">Quy định rạp phim</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên hệ</h3>
+                <p>📍 123 Đường ABC, Q.1, TP.HCM</p>
+                <p>📞 Hotline: 1900-xxxx</p>
+                <p>📧 Email: support@cinema.vn</p>
+                <p>🕒 8:00 - 23:00 hàng ngày</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cinema ABC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+        
+      
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        
+        document.querySelector('.search-input').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = searchTerm ? 'none' : 'block';
+                }
+            });
+        });
+        
+        
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cảm ơn bạn đã gửi yêu cầu! Chúng tôi sẽ liên hệ trong thời gian sớm nhất.');
+        });
+     
+        document.querySelector('.chat-btn').addEventListener('click', function() {
+            alert('Tính năng chat sẽ sớm được triển khai!');
+        });
+    </script>
+</body>
+</html>
