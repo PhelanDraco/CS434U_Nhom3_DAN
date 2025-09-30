@@ -1,0 +1,364 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    z-index: 100;
+    padding: 15px 30px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo {
+    color: #7cb342;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #666;
+}
+
+/* Main Content */
+.main-content {
+    margin-top: 100px;
+}
+
+.cinema-section {
+    flex: 1;
+    padding: 40px;
+}
+
+.screen-area {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.screen-label {
+    color: #999;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.screen {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, transparent 0%, #7cb342 20%, #7cb342 80%, transparent 100%);
+    border-radius: 20px;
+    margin-bottom: 40px;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.legend-seat {
+    width: 20px;
+    height: 18px;
+    border-radius: 6px 6px 2px 2px;
+    position: relative;
+}
+
+.legend-seat::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 2px;
+    right: 2px;
+    height: 4px;
+    background: inherit;
+    border-radius: 0 0 2px 2px;
+}
+
+.legend-seat.standard {
+    background: #ffd700;
+}
+
+.legend-seat.vip {
+    background: #ff6b6b;
+}
+
+.legend-seat.couple {
+    background: #ff9800;
+}
+
+.legend-seat.available {
+    background: #7cb342;
+}
+
+.legend-seat.sold {
+    background: #ccc;
+}
+
+.seating-grid {
+    display: grid;
+    grid-template-columns: 30px repeat(15, 1fr) 30px;
+    gap: 8px;
+    justify-items: center;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.row-label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #666;
+    font-size: 16px;
+}
+
+.seat {
+    width: 32px;
+    height: 28px;
+    border-radius: 6px 6px 2px 2px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.seat::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 2px;
+    right: 2px;
+    height: 4px;
+    background: inherit;
+    border-radius: 0 0 2px 2px;
+}
+
+.seat:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.seat.standard {
+    background: #ffd700;
+}
+
+.seat.vip {
+    background: #ff6b6b;
+}
+
+.seat.couple {
+    background: #ff9800;
+}
+
+.seat.available {
+    background: #7cb342;
+}
+
+.seat.sold {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.seat.sold:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.seat.selected {
+    background: #7cb342 !important;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+.couple-seat {
+    width: 68px;
+    background: #ff9800;
+}
+
+/* Sidebar */
+.booking-sidebar {
+    width: 350px;
+    background: #f8f9fa;
+    padding: 30px;
+    border-left: 1px solid #e9ecef;
+}
+
+.movie-info h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.movie-details {
+    color: #7cb342;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.showtime {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.season-label {
+    background: #7cb342;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.ticket-info {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-type {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.price {
+    font-weight: bold;
+    color: #333;
+}
+
+.total-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.total-price {
+    color: #e53935;
+    font-size: 16pxpx;
+}
+
+.book-button {
+    width: 100%;
+    background: #7cb342;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.book-button:hover {
+    background: #689f33;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
+}
+
+.book-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.return-info {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.return-info .return-link {
+    color: #4caf50;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+.time-remaining {
+    color: #e53935;
+    font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .booking-sidebar {
+        width: 100%;
+    }
+
+    .seating-grid {
+        grid-template-columns: 20px repeat(15, 1fr) 20px;
+    }
+
+    .seat {
+        width: 24px;
+        height: 20px;
+    }
+}

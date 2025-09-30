@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé xem phim</title>
+    <link rel="stylesheet" href="./assets/css/datve.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">XYZ Cinema</div>
+            <div class="user-info">
+                <span>Gửi định FAQ</span>
+                <span>TP. HUẾ ▼</span>
+                <span>Hải Le / Thoát</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="cinema-section">
+                <div class="screen-area">
+                    <div class="screen-label">Màn hình</div>
+                    <div class="screen"></div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-seat standard"></div>
+                        <span>Standard</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat vip"></div>
+                        <span>VIP</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat couple"></div>
+                        <span>Couple</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat available"></div>
+                        <span>Ghế đã chọn</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-seat sold"></div>
+                        <span>Ghế đã bán</span>
+                    </div>
+                </div>
+
+                <div class="seating-grid" id="seatingGrid">
+                </div>
+            </div>
+
+            <div class="booking-sidebar">
+                <div class="movie-info">
+                    <h2>XYZ Cinema Đà Nẵng</h2>
+                    <div class="movie-details">Screen 4 - 10/9/2025 - Suất chiếu: 9h30</div>
+                    <div class="showtime"></div>
+                </div>
+
+                <div class="season-label">MƯA ĐỎ</div>
+
+                <div class="ticket-info" id="ticketInfo">
+                </div>
+
+                <div class="total-section">
+                    <div class="total">
+                        <span>Tổng tiền</span>
+                        <span class="total-price" id="totalPrice">0 VNĐ</span>
+                    </div>
+
+                    <button class="book-button" id="bookButton" disabled>
+                        Thanh toán
+                    </button>
+
+                    <div class="return-info">
+                        <a href="" class="return-link">Return</a><br>
+                        <li>Còn lại <span class="time-remaining">6 phút, 26 giây</span></li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const seatPrices = {
+            'standard': 45000,
+            'vip': 65000,
+            'couple': 120000
+        };
+
+        const seatLayout = {
+            'A': { count: 10, type: 'standard' },
+            'B': { count: 10, type: 'standard', special: [11] },
+            'C': { count: 10, type: 'vip' },
+            'D': { count: 10, type: 'vip' },
+            'E': { count: 10, type: 'sold', available: [1, 2, 3, 14, 15] },
+            'F': { count: 10, type: 'sold', available: [1, 2, 3, 14, 15] },
+            'G': { count: 10, type: 'sold', available: [14, 15] },
+            'H': { count: 10, type: 'sold', available: [14, 15] },
+            'I': { count: 10, type: 'sold', available: [14, 15] },
+            'J': { count: 10, type: 'standard' },
+            'K': { count: 10, type: 'standard' },
+            'L': { count: 10, type: 'couple' }
+        };
+
+        function generateSeats() {
+            const grid = document.getElementById('seatingGrid');
+
+            Object.keys(seatLayout).forEach(row => {
+                const config = seatLayout[row];
+
+                const leftLabel = document.createElement('div');
+                leftLabel.className = 'row-label';
+                leftLabel.textContent = row;
+                grid.appendChild(leftLabel);
+
+                if (row === 'L') {
+                    for (let i = 1; i <= config.count; i++) {
+                        const seat = document.createElement('div');
+                        seat.className = 'seat couple-seat';
+                        seat.dataset.row = row;
+                        seat.dataset.number = i;
+                        seat.dataset.type = 'couple';
+                        seat.addEventListener('click', () => selectSeat(seat));
+                        grid.appendChild(seat);
+                    }
+                    for (let i = config.count + 1; i <= 15; i++) {
+                        const empty = document.createElement('div');
+                        grid.appendChild(empty);
+                    }
+                } else {
+                    for (let i = 1; i <= 15; i++) {
+                        if (config.gaps && config.gaps.includes(i)) {
+                            const empty = document.createElement('div');
+                            grid.appendChild(empty);
+                        } else if (i <= config.count) {
+                            const seat = document.createElement('div');
+                            let seatType = config.type;
+
+                            if (config.available && !config.available.includes(i)) {
+                                seatType = config.type;
+                            } else if (config.available && config.available.includes(i)) {
+                                seatType = 'standard';
+                            }
+
+                            if (row === 'B' && i === 11) {
+                                seatType = 'selected';
+                            }
+
+                            seat.className = `seat ${seatType}`;
+                            seat.dataset.row = row;
+                            seat.dataset.number = i;
+                            seat.dataset.type = seatType === 'selected' ? 'standard' : seatType;
+
+                            if (seatType !== 'sold') {
+                                seat.addEventListener('click', () => selectSeat(seat));
+                            }
+
+                            grid.appendChild(seat);
+                        } else {
+                            const empty = document.createElement('div');
+                            grid.appendChild(empty);
+                        }
+                    }
+                }
+
+                const rightLabel = document.createElement('div');
+                rightLabel.className = 'row-label';
+                rightLabel.textContent = row;
+                grid.appendChild(rightLabel);
+            });
+        }
+
+        function selectSeat(seat) {
+            if (seat.classList.contains('sold')) return;
+
+            if (seat.classList.contains('selected')) {
+                seat.classList.remove('selected');
+                const originalType = seat.dataset.type;
+                seat.classList.add(originalType);
+            } else {
+                seat.classList.remove('standard', 'vip', 'couple');
+                seat.classList.add('selected');
+            }
+
+            updateBookingInfo();
+        }
+
+        function updateBookingInfo() {
+            const selectedSeats = document.querySelectorAll('.seat.selected');
+            const bookButton = document.getElementById('bookButton');
+            const ticketInfo = document.getElementById('ticketInfo');
+            const totalPrice = document.getElementById('totalPrice');
+
+            ticketInfo.innerHTML = '';
+
+            if (selectedSeats.length > 0) {
+                bookButton.disabled = false;
+                bookButton.style.background = '#7cb342';
+
+                const seatsByType = {};
+                let total = 0;
+
+                selectedSeats.forEach(seat => {
+                    const seatType = seat.dataset.type;
+                    const seatPosition = seat.dataset.row + seat.dataset.number;
+                    const price = seatPrices[seatType];
+
+                    if (!seatsByType[seatType]) {
+                        seatsByType[seatType] = {
+                            seats: [],
+                            count: 0,
+                            price: price
+                        };
+                    }
+
+                    seatsByType[seatType].seats.push(seatPosition);
+                    seatsByType[seatType].count++;
+                    total += price;
+                });
+
+                Object.keys(seatsByType).forEach(seatType => {
+                    const info = seatsByType[seatType];
+                    const ticketTypeDiv = document.createElement('div');
+                    ticketTypeDiv.className = 'ticket-type';
+
+                    const seatTypeName = seatType === 'standard' ? 'Standard-2D' :
+                        seatType === 'vip' ? 'VIP-2D' : 'Couple-2D';
+
+                    ticketTypeDiv.innerHTML = `
+                        <div>
+                            <div style="margin-bottom: 5px;">
+                                <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px; margin-right: 5px;">T13</span>
+                                <span style="background: #333; color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px; margin-right: 5px;">PHỤ ĐỀ</span>
+                                <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 12px;">2D</span>
+                            </div>
+                            <div>${info.count} x Adult-${seatTypeName}</div>
+                            <div>${info.seats.join(', ')}</div>
+                        </div>
+                        <div class="price">${(info.count * info.price).toLocaleString('vi-VN')} VNĐ</div>
+                    `;
+
+                    ticketInfo.appendChild(ticketTypeDiv);
+                });
+                totalPrice.textContent = `${total.toLocaleString('vi-VN')} VNĐ`;
+
+            } else {
+                bookButton.disabled = true;
+                bookButton.style.background = '#ccc';
+                totalPrice.textContent = '0 VNĐ';
+            }
+        }
+        function startCountdown() {
+            let timeLeft = 6 * 60 + 26;
+
+            const timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                document.querySelector('.time-remaining').textContent = `${minutes} phút, ${seconds} giây`;
+
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                    alert('Thời gian giữ ghế đã hết!');
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            generateSeats();
+            startCountdown();
+            updateBookingInfo();
+        });
+        const socket = io("http://localhost:5000");
+
+        socket.on("seatsUpdated", (data) => {
+            console.log("Ghế cập nhật:", data);
+        });
+
+        document.getElementById("bookButton").addEventListener("click", async () => {
+            const selectedSeats = Array.from(document.querySelectorAll('.seat.selected'))
+                .map(seat => seat.dataset.row + seat.dataset.number);
+
+            const res = await fetch("http://localhost:5000/api/book", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ showtimeId: 1, selectedSeats })
+            });
+
+            const data = await res.json();
+            alert(data.message);
+        });
+    </script>
+</body>
+
+</html>
