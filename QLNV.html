@@ -1,71 +1,294 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quản lý nhân viên</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous">
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 mt-3">
-          <div class="card shadow">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="mb-0">Danh sách nhân viên</h3>
-              <button class="btn btn-primary" type="button">+ Thêm nhân viên</button>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý nhân viên</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 mt-3">
+        <div class="card shadow">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Danh sách nhân viên</h3>
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#ThemNhanVien">
+              + Thêm nhân viên
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-dark">
+                  <tr>
+                    <th scope="col">Mã NV</th>
+                    <th scope="col">Họ tên</th>
+                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Ca làm</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Nhân viên sẽ được load bằng JS -->
+                </tbody>
+              </table>
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover text-center align-middle">
-                  <thead class="table-dark">
-                    <tr>
-                      <th scope="col">Mã NV</th>
-                      <th scope="col">Họ tên</th>
-                      <th scope="col">Chức vụ</th>
-                      <th scope="col">Ca làm</th>
-                      <th scope="col">Trạng thái</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>NV001</td>
-                      <td>Nguyễn Văn A</td>
-                      <td>Quản lý</td>
-                      <td>Sáng</td>
-                      <td><span class="badge bg-success">Đang làm</span></td>
-                      <td>
-                        <button class="btn btn-sm btn-warning">Sửa</button>
-                        <button class="btn btn-sm btn-danger">Xóa</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>NV002</td>
-                      <td>Trần Thị B</td>
-                      <td>Nhân viên</td>
-                      <td>Tối</td>
-                      <td><span class="badge bg-secondary">Nghỉ</span></td>
-                      <td>
-                        <button class="btn btn-sm btn-warning">Sửa</button>
-                        <button class="btn btn-sm btn-danger">Xóa</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+          </div>
+
+          <!-- Modal thêm nhân viên -->
+          <div class="modal fade" id="ThemNhanVien" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5">Thêm Nhân viên</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label">Mã NV</label>
+                    <input type="text" class="form-control" id="MaNV">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Họ tên</label>
+                    <input type="text" class="form-control" id="HoTen">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Chức vụ</label>
+                    <input type="text" class="form-control" id="ChucVu">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Ca làm</label>
+                    <input type="text" class="form-control" id="CaLam">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <select class="form-control" id="TrangThai">
+                      <option>Đang làm</option>
+                      <option>Nghỉ</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                  <button type="button" class="btn btn-primary" id="btnThemNV">Xác nhận</button>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Modal sửa nhân viên -->
+          <div class="modal fade" id="SuaNhanVien" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5">Sửa Nhân viên</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label">Mã NV</label>
+                    <input type="text" class="form-control" id="editMaNV" disabled />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Họ tên</label>
+                    <input type="text" class="form-control" id="editHoTen" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Chức vụ</label>
+                    <input type="text" class="form-control" id="editChucVu" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Ca làm</label>
+                    <input type="text" class="form-control" id="editCaLam" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <select class="form-control" id="editTrangThai">
+                      <option>Đang làm</option>
+                      <option>Nghỉ</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                  <button type="button" class="btn btn-primary" id="btnSuaNV">Lưu thay đổi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Xóa Nhân viên -->
+          <div class="modal fade" id="XoaNhanVienModal" tabindex="-1" aria-labelledby="xoaNhanVienLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                  <h5 class="modal-title" id="xoaNhanVienLabel">Xác nhận xóa</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Bạn có chắc chắn muốn xóa nhân viên <strong id="tenNhanVienXoa"></strong> (Mã NV:
+                    <span id="maNVXoa"></span>) không?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-danger" id="btnXacNhanXoa">Xóa</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
+
         </div>
       </div>
     </div>
-  </body>
+  </div>
+
+  <script>
+    let maNVCanXoa = null; // biến toàn cục để lưu NV cần xóa
+
+    // Hàm load danh sách nhân viên từ API
+    async function loadNhanVien() {
+      let res = await fetch("http://127.0.0.1:8000/api/nguoi-dung/Lay-Nhan-Vien");
+      let data = await res.json();
+
+      let tbody = document.querySelector("tbody");
+      tbody.innerHTML = ""; // clear cũ
+
+      data.forEach(nv => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${nv.MaNV}</td>
+            <td>${nv.HoTen}</td>
+            <td>${nv.ChucVu}</td>
+            <td>${nv.CaLam}</td>
+            <td>
+              <span class="badge ${nv.TrangThai === 'Đang làm' ? 'bg-success' : 'bg-secondary'}">
+                ${nv.TrangThai}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning btn-edit">Sửa</button>
+              <button class="btn btn-sm btn-danger btn-delete">Xóa</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // Gắn sự kiện cho nút sửa
+      document.querySelectorAll(".btn-edit").forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          const nv = data[index];
+          document.getElementById("editMaNV").value = nv.MaNV;
+          document.getElementById("editHoTen").value = nv.HoTen;
+          document.getElementById("editChucVu").value = nv.ChucVu;
+          document.getElementById("editCaLam").value = nv.CaLam;
+          document.getElementById("editTrangThai").value = nv.TrangThai;
+
+          var modal = new bootstrap.Modal(document.getElementById('SuaNhanVien'));
+          modal.show();
+        });
+      });
+
+      // Gắn sự kiện cho nút xóa
+      document.querySelectorAll(".btn-delete").forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          const nv = data[index];
+          maNVCanXoa = nv.MaNV;
+          document.getElementById("tenNhanVienXoa").innerText = nv.HoTen;
+          document.getElementById("maNVXoa").innerText = nv.MaNV;
+
+          var modal = new bootstrap.Modal(document.getElementById('XoaNhanVienModal'));
+          modal.show();
+        });
+      });
+    }
+
+    // Hàm thêm nhân viên
+    async function themNhanVien() {
+      let MaNV = document.getElementById("MaNV").value;
+      let HoTen = document.getElementById("HoTen").value;
+      let ChucVu = document.getElementById("ChucVu").value;
+      let CaLam = document.getElementById("CaLam").value;
+      let TrangThai = document.getElementById("TrangThai").value;
+
+      let res = await fetch("http://127.0.0.1:8000/api/nguoi-dung/Them-Nhan-Vien", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ MaNV, HoTen, ChucVu, CaLam, TrangThai })
+      });
+
+      if (res.ok) {
+        alert("Thêm nhân viên thành công!");
+        document.getElementById("MaNV").value = "";
+        document.getElementById("HoTen").value = "";
+        document.getElementById("ChucVu").value = "";
+        document.getElementById("CaLam").value = "";
+        document.getElementById("TrangThai").value = "Đang làm";
+        loadNhanVien();
+      } else {
+        alert("Có lỗi khi thêm nhân viên!");
+      }
+    }
+
+    // Sửa nhân viên
+    document.getElementById("btnSuaNV").addEventListener("click", async () => {
+      let MaNV = document.getElementById("editMaNV").value;
+      let HoTen = document.getElementById("editHoTen").value;
+      let ChucVu = document.getElementById("editChucVu").value;
+      let CaLam = document.getElementById("editCaLam").value;
+      let TrangThai = document.getElementById("editTrangThai").value;
+
+      let res = await fetch(`http://127.0.0.1:8000/api/nguoi-dung/Sua-Nhan-Vien/${MaNV}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ HoTen, ChucVu, CaLam, TrangThai })
+      });
+
+      if (res.ok) {
+        alert("Cập nhật nhân viên thành công!");
+        loadNhanVien();
+        bootstrap.Modal.getInstance(document.getElementById('SuaNhanVien')).hide();
+      } else {
+        alert("Có lỗi khi cập nhật nhân viên!");
+      }
+    });
+
+    // Xóa nhân viên
+    document.getElementById("btnXacNhanXoa").addEventListener("click", async function () {
+      if (!maNVCanXoa) return;
+
+      try {
+        let response = await fetch(`http://127.0.0.1:8000/api/nguoi-dung/Xoa-Nhan-Vien/${maNVCanXoa}`, {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        });
+
+        let result = await response.json();
+        alert(result.message || "Xóa thành công");
+
+        loadNhanVien();
+        bootstrap.Modal.getInstance(document.getElementById("XoaNhanVienModal")).hide();
+        maNVCanXoa = null;
+      } catch (error) {
+        console.error("Lỗi xóa:", error);
+        alert("Có lỗi khi xóa nhân viên!");
+      }
+    });
+
+    // Load ban đầu
+    document.addEventListener("DOMContentLoaded", () => {
+      loadNhanVien();
+      document.getElementById("btnThemNV").addEventListener("click", themNhanVien);
+    });
+  </script>
+</body>
 </html>
